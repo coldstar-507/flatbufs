@@ -1,55 +1,5 @@
 namespace flatgen;
 
-/* struct Temp { */
-/*  media_id: string; */
-/*  timestamp: int64; */
-/* } */
-
-struct LatLon {
- latitude:double;
- longitude:double;
-}
-
-table Area {
- center:LatLon;
- perim:[LatLon];
-}
-
-table Booster {
- boost_id:string;
- token:string;
- device_id:string;
- sender_id:string;
- change_address:[ubyte];
- s1:[ubyte];
- price_per_head:int64;
- input_sats:int64;
- partial_tx:[ubyte];
- limit:int64;
- max_age:int64;
- min_age:int64;
- genders:[string];
- interests:[string];
- areas:[Area];
- boost_message:[ubyte];
- full_media:[ubyte];
- // media_metadata:[ubyte];
- // media_data:[ubyte];
-}
-
-/* table Root { */
-/*  tss:uint32; */
-/*  u32:uint32; */
-/*  place:uint16; */
-/*  kind:uint8; */
-/* } */
-
-/* table DualRoot { */
-/*  primary:Root; */
-/*  secondary:Root; */
-/*  kind: uint8; */
-/* } */
-
 table MessageId {
  timestamp:int64;
  u32:uint32;
@@ -72,22 +22,43 @@ table PushId {
  root:string;
  device:uint32;
 }
+  
 
-/* table TimeId { */
-/*  place:string; */
-/*  unik:string;   */
-/*  timestamp:int64;   */
-/* } */
+table MessageTarget {
+ user_id:string;
+ device_id:uint32;
+ token:string;
+ show_notif:bool;
+ do_push:bool;
+}
 
-/* table PushId { */
-/*  prefix:string; */
-/*  // user_secret:string; */
-/*  // device:string; */
-/*  place:string; */
-/*  unik:string; */
-/*  timestamp:int64; */
-/*  suffix:string; */
-/* } */
+table Notifications {
+ sender:string;
+ root:string;
+ header:string;
+ body:string;
+ targets:[MessageTarget];
+}
+
+table ChatScrollRequest {
+ chat_id:string;
+ before:bool;
+}
+
+root_type ChatScrollRequest;
+
+table Snip {
+ chat_id:string;
+ sender_id:string;
+ tag:string;
+ media_id:string;
+ temp_media:string;
+ txt:string;
+ snip_size:Offset;
+ sticks:[Sticker];
+}
+
+root_type Snip;
 
 table PushRequest {
  push_id:PushId;
@@ -95,15 +66,6 @@ table PushRequest {
 }
 
 root_type PushRequest;
-
-/* table MessageId { */
-/*  place:string; */
-/*  unik:string; */
-/*  timestamp:int64; */
-/*  root:string; */
-/*  suffix:string; */
-/* } */
-
 root_type MessageId;
 
 table ScrollRes {
@@ -153,20 +115,6 @@ table FullSticker {
  full_media:FullMedia;
 }
 
-/* time_id:string; */
-/* root: string; */
-/* message_id:string; */
-/* reaction_id:string;   */
-/* sender_id:string; */
-
-/* time_id:string; */
-/* sender_id:string; */
-/* message_id:string; */
-/* media_id:string; */
-/* temp:string; */
-/* reactors:[string]; */
-/* emoji:string; */
-
 table MessageEventRequest {
  type:uint8;
  message_event:MessageEvent;
@@ -202,130 +150,190 @@ table MessageEvent {
 
 root_type MessageEvent;
 
-table MessageEvent2 {
- chat_id:[ubyte];
- type:ubyte;
- reaction_id:string;
- sender_id:string;
- sender_tag:string;
- message_id:string;
- root:string;
- tag:string;
- timestamp:uint64;
- forwarded_from:string;
- forwarded_from_tag:string;
- payment_id:string;
- nodes:[string];
- replies:[string];
- txt:string;
- media_id:string;
- temp_media:string;
- temp_payment:string;
- emoji:string;
- sticks:[Sticker];
- snip_size:Offset;
-}
-
-root_type MessageEvent2;
-
-table MessageTarget {
- user_id:string;
- device_id:uint32;
- token:string;
- show_notif:bool;
- do_push:bool;
-}
-
-table Notifications {
- sender:string;
- root:string;
- header:string;
- body:string;
- targets:[MessageTarget];
-}
-
-table ChatScrollRequest {
- chat_id:string;
- before:bool;
-}
-
-root_type ChatScrollRequest;
-
-table Snip {
- chat_id:string;
- sender_id:string;
- tag:string;
- media_id:string;
- temp_media:string;
- txt:string;
- snip_size:Offset;
- sticks:[Sticker];
-}
-
-root_type Snip;
-
-table MessageToken {
- device_id:uint32;
- token:string;
-}
-
-table HashTree {
- root:string;
- hash:string;
-}
-
-table ChatConnReq {
- root:string;
- device_id:string;
-}
-
-root_type ChatConnReq;
-  
-table Node {
- id:string;
- tag:string;  
- type:string;
- name:string;
- last_name:string;
- blue_hash:string;
- last_update: int64;
- description: string;
- messaging_tokens:[MessageToken];
- main_device_id:uint32;
- hash_tree:[HashTree];
- owner_id:string;
- is_public:bool;
- media_id:string;
- children:[string];
- posts:[string];
- admins:[string];
- members:[string];
- privates:[string];
- device_id:uint32;
- neuter:string;
- latitude:float64;
- longitude:float64;
-}
-
-root_type Node;
-
-table NodeResponse {
- nodes:[Node];
-}
-
-root_type NodeResponse;
-
-table NodeRequest {
- node:Node;
- media:MediaMetadata;
- data:[ubyte];
-}
-
 table PaymentPush {
  id:string;
  temp_id:string;
 }
 
 root_type PaymentPush;
+
+/* table Area { */
+/*  center:LatLon; */
+/*  perim:[LatLon]; */
+/* } */
+
+/* table Booster { */
+/*  boost_id:string; */
+/*  token:string; */
+/*  device_id:string; */
+/*  sender_id:string; */
+/*  change_address:[ubyte]; */
+/*  s1:[ubyte]; */
+/*  price_per_head:int64; */
+/*  input_sats:int64; */
+/*  partial_tx:[ubyte]; */
+/*  limit:int64; */
+/*  max_age:int64; */
+/*  min_age:int64; */
+/*  genders:[string]; */
+/*  interests:[string]; */
+/*  areas:[Area]; */
+/*  boost_message:[ubyte]; */
+/*  full_media:[ubyte]; */
+/*  // media_metadata:[ubyte]; */
+/*  // media_data:[ubyte]; */
+/* } */
+
+/* table Root { */
+/*  tss:uint32; */
+/*  u32:uint32; */
+/*  place:uint16; */
+/*  kind:uint8; */
+/* } */
+
+/* table DualRoot { */
+/*  primary:Root; */
+/*  secondary:Root; */
+/*  kind: uint8; */
+/* } */
+
+/* struct Temp { */
+/*  media_id: string; */
+/*  timestamp: int64; */
+/* } */
+
+/* struct LatLon { */
+/*  latitude:double; */
+/*  longitude:double; */
+/* } */
+
+/* table TimeId { */
+/*  place:string; */
+/*  unik:string;   */
+/*  timestamp:int64;   */
+/* } */
+
+/* table PushId { */
+/*  prefix:string; */
+/*  // user_secret:string; */
+/*  // device:string; */
+/*  place:string; */
+/*  unik:string; */
+/*  timestamp:int64; */
+/*  suffix:string; */
+/* } */
+
+
+/* table MessageId { */
+/*  place:string; */
+/*  unik:string; */
+/*  timestamp:int64; */
+/*  root:string; */
+/*  suffix:string; */
+/* } */
+
+
+/* time_id:string; */
+/* root: string; */
+/* message_id:string; */
+/* reaction_id:string;   */
+/* sender_id:string; */
+
+/* time_id:string; */
+/* sender_id:string; */
+/* message_id:string; */
+/* media_id:string; */
+/* temp:string; */
+/* reactors:[string]; */
+/* emoji:string; */
+
+
+
+/* table MessageEvent2 { */
+/*  chat_id:[ubyte]; */
+/*  type:ubyte; */
+/*  reaction_id:string; */
+/*  sender_id:string; */
+/*  sender_tag:string; */
+/*  message_id:string; */
+/*  root:string; */
+/*  tag:string; */
+/*  timestamp:uint64; */
+/*  forwarded_from:string; */
+/*  forwarded_from_tag:string; */
+/*  payment_id:string; */
+/*  nodes:[string]; */
+/*  replies:[string]; */
+/*  txt:string; */
+/*  media_id:string; */
+/*  temp_media:string; */
+/*  temp_payment:string; */
+/*  emoji:string; */
+/*  sticks:[Sticker]; */
+/*  snip_size:Offset; */
+/* } */
+
+/* root_type MessageEvent2; */
+
+
+
+/* table MessageToken { */
+/*  device_id:uint32; */
+/*  token:string; */
+/* } */
+
+/* table HashTree { */
+/*  root:string; */
+/*  hash:string; */
+/* } */
+
+/* table ChatConnReq { */
+/*  root:string; */
+/*  device_id:string; */
+/* } */
+
+/* root_type ChatConnReq; */
+  
+/* table Node { */
+/*  id:string; */
+/*  tag:string;   */
+/*  type:string; */
+/*  name:string; */
+/*  last_name:string; */
+/*  blue_hash:string; */
+/*  last_update: int64; */
+/*  description: string; */
+/*  messaging_tokens:[MessageToken]; */
+/*  main_device_id:uint32; */
+/*  hash_tree:[HashTree]; */
+/*  owner_id:string; */
+/*  is_public:bool; */
+/*  media_id:string; */
+/*  children:[string]; */
+/*  posts:[string]; */
+/*  admins:[string]; */
+/*  members:[string]; */
+/*  privates:[string]; */
+/*  device_id:uint32; */
+/*  neuter:string; */
+/*  latitude:float64; */
+/*  longitude:float64; */
+/* } */
+
+/* root_type Node; */
+
+/* table NodeResponse { */
+/*  nodes:[Node]; */
+/* } */
+
+/* root_type NodeResponse; */
+
+/* table NodeRequest { */
+/*  node:Node; */
+/*  media:MediaMetadata; */
+/*  data:[ubyte]; */
+/* } */
+
+
 
 /* root_type NodeRequest; */
