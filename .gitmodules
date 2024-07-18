@@ -1,3 +1,6 @@
 [submodule "flatgen"]
 	path = flatgen
 	url = https://github.com/coldstar-507/flatgen.git
+[submodule "dart-fg"]
+	path = dart-fg
+	url = https://github.com/coldstar-507/dart-fg.git
