@@ -3,9 +3,24 @@ namespace flatgen;
 table MessageId {
  timestamp:int64;
  u32:uint32;
- root:string;
+ root:Root;
  place:uint16;
  kind:uint8;
+}
+
+table NodeId {
+ tss:uint32;
+ u32:uint32;
+}
+
+table DualNodeId {
+ primary:NodeId;
+ secondary:NodeId;
+}
+
+table Root {
+ single:NodeId;
+ dual:DualNodeId;
 }
 
 table TempId {
@@ -19,10 +34,9 @@ table PushId {
  u32:uint32;
  timestamp:int64;
  place:uint16;
- root:string;
+ root:Root;
  device:uint32;
 }
-  
 
 table MessageTarget {
  user_id:string;
