@@ -9,18 +9,15 @@ table MessageId {
 }
 
 table NodeId {
- tss:uint32;
+ timestamp:int64;
  u32:uint32;
-}
-
-table DualNodeId {
- primary:NodeId;
- secondary:NodeId;
+ kind:uint8;
 }
 
 table Root {
- single:NodeId;
- dual:DualNodeId;
+ primary:NodeId;
+ secondary:NodeId;
+ kind:uint8;
 }
 
 table TempId {
@@ -34,8 +31,9 @@ table PushId {
  u32:uint32;
  timestamp:int64;
  place:uint16;
- root:Root;
+ node_id:NodeId;
  device:uint32;
+ kind:uint8;
 }
 
 table MessageTarget {
