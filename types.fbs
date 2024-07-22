@@ -4,7 +4,6 @@ table MessageId {
  timestamp:int64;
  u32:uint32;
  root:Root;
- place:uint16;
  kind:uint8;
 }
 
@@ -17,6 +16,8 @@ table NodeId {
 table Root {
  primary:NodeId;
  secondary:NodeId;
+ timestamp:int64;
+ chat_place:uint16;
  kind:uint8;
 }
 
@@ -30,18 +31,16 @@ table TempId {
 table PushId {
  u32:uint32;
  timestamp:int64;
- place:uint16;
  node_id:NodeId;
  device:uint32;
  kind:uint8;
 }
 
 table MessageTarget {
- user_id:string;
- device_id:uint32;
+  // user_id:string;
+  // device_id:uint32;
  token:string;
  show_notif:bool;
- do_push:bool;
 }
 
 table Notifications {
@@ -51,40 +50,15 @@ table Notifications {
  body:string;
  targets:[MessageTarget];
 }
+root_type Notifications;
 
-table ChatScrollRequest {
- chat_id:string;
- before:bool;
-}
-
-root_type ChatScrollRequest;
-
-table Snip {
- chat_id:string;
- sender_id:string;
- tag:string;
- media_id:string;
- temp_media:string;
- txt:string;
- snip_size:Offset;
- sticks:[Sticker];
-}
-
-root_type Snip;
 
 table PushRequest {
  push_id:PushId;
  payload:[ubyte];
 }
-
 root_type PushRequest;
-root_type MessageId;
 
-table ScrollRes {
- code:bool;
- before:bool;
- root:string;
-}
 
 table MediaMetadata {
  time_id:string;
@@ -99,6 +73,8 @@ table MediaMetadata {
  is_saved:bool;
  temp:string;
 }
+
+root_type MediaMetadata;
 
 table FullMedia {
  metadata:MediaMetadata;
@@ -121,20 +97,6 @@ table Sticker {
  scale:float;
  emoji:string;
 }
-
-table FullSticker {
- sticker:Sticker;
- full_media:FullMedia;
-}
-
-table MessageEventRequest {
- type:uint8;
- message_event:MessageEvent;
- full_media:FullMedia;
- notifications:Notifications;  
-}
-
-root_type MessageEventRequest;
 
 table MessageEvent {
  chat_id:MessageId;
@@ -162,12 +124,6 @@ table MessageEvent {
 
 root_type MessageEvent;
 
-table PaymentPush {
- id:string;
- temp_id:string;
-}
-
-root_type PaymentPush;
 
 /* table Area { */
 /*  center:LatLon; */
