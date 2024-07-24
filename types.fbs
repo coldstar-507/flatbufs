@@ -7,6 +7,17 @@ table MessageId {
  kind:uint8;
 }
 
+table MediaId {
+ timestamp:int64;
+ u32:uint32;
+ place:uint16;
+ width:uint16;
+ height:uint16;
+ squared:bool;
+ video:bool;
+ kind:uint8;
+}
+
 table NodeId {
  timestamp:int64;
  u32:uint32;
@@ -61,7 +72,8 @@ root_type PushRequest;
 
 
 table MediaMetadata {
- time_id:string;
+ media_id:MediaId;
+ temp_id:TempId;  
  owner_id:string;
  timestamp:int64;
  mime:string;
@@ -71,7 +83,6 @@ table MediaMetadata {
  is_paid_to_own:bool;
  is_locked:bool;
  is_saved:bool;
- temp:string;
 }
 
 root_type MediaMetadata;
