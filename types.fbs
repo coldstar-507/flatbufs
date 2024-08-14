@@ -10,11 +10,24 @@ table MessageId {
 table MediaId {
  timestamp:int64;
  u32:uint32;
- place:uint16;
  width:uint16;
  height:uint16;
  squared:bool;
  video:bool;
+ kind:uint8;
+}
+
+table PaymentRef {
+ timestamp:int64;
+ payment_id_raw:[ubyte];
+ kind:uint8;
+} 
+
+table MediaRef {
+ timestamp:int64;
+ place:uint16;
+ media_id:MediaId;
+ permanent:bool;
  kind:uint8;
 }
 
@@ -32,13 +45,6 @@ table Root {
  kind:uint8;
 }
 
-table TempId {
- timestamp:int64;
- u32:uint32;
- place:uint16;
- kind:uint8;
-}
-
 table PushId {
  u32:uint32;
  timestamp:int64;
@@ -48,8 +54,8 @@ table PushId {
 }
 
 table MessageTarget {
-  // user_id:string;
-  // device_id:uint32;
+ // user_id:string;
+ // device_id:uint32;
  token:string;
  show_notif:bool;
 }
@@ -73,10 +79,10 @@ root_type PushRequest;
 
 table MediaMetadata {
  media_id:MediaId;
- temp_id:TempId;  
  owner_id:string;
  timestamp:int64;
  mime:string;
+ ref:MediaRef;  
  is_reversed:bool;
  is_encrypted:bool;
  is_paid_to_view:bool;
@@ -121,20 +127,27 @@ table MessageEvent {
  timestamp:uint64;
  forwarded_from:string;
  forwarded_from_tag:string;
- payment_id:string;
  nodes:[string];
  replies:[string];
  txt:string;
- media_id:string;
- temp_media:string;
- temp_payment:string;
+ media_ref:MediaRef;
+ payment_ref:PaymentRef;
  emoji:string;
  sticks:[Sticker];
  snip_size:Offset;
+ // payment_id:string;
+ // temp_media:TempId;
+ // temp_payment:string;  
 }
 
 root_type MessageEvent;
 
+/* table TempId { */
+/*  timestamp:int64; */
+/*  u32:uint32; */
+/*  place:uint16; */
+/*  kind:uint8; */
+/* } */
 
 /* table Area { */
 /*  center:LatLon; */
@@ -282,7 +295,7 @@ root_type MessageEvent;
 /*  blue_hash:string; */
 /*  last_update: int64; */
 /*  description: string; */
-/*  messaging_tokens:[MessageToken]; */
+/*  messaging_tokens:[MessageToken]; *
 /*  main_device_id:uint32; */
 /*  hash_tree:[HashTree]; */
 /*  owner_id:string; */
