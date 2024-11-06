@@ -1,10 +1,11 @@
 namespace flatgen;
 
 table MessageId {
+ prefix:uint8;  
  timestamp:int64;
  u32:uint32;
  root:Root;
- kind:uint8;
+ suffix:uint8;
 }
 
 table MediaId {
@@ -14,35 +15,35 @@ table MediaId {
  height:uint16;
  squared:bool;
  video:bool;
- kind:uint8;
+ prefix:uint8;
 }
 
 table PaymentRef {
  timestamp:int64;
  payment_id_raw:[ubyte];
- kind:uint8;
+ prefix:uint8;
 } 
 
 table MediaRef {
+ prefix:uint8;  
  timestamp:int64;
  place:uint16;
  media_id:MediaId;
  permanent:bool;
- kind:uint8;
 }
 
 table NodeId {
  timestamp:int64;
  u32:uint32;
- kind:uint8;
+ prefix:uint8;
 }
 
 table Root {
+ prefix:uint8;  
  primary:NodeId;
  secondary:NodeId;
  timestamp:int64;
  chat_place:uint16;
- kind:uint8;
 }
 
 table PushId {
@@ -50,8 +51,15 @@ table PushId {
  timestamp:int64;
  node_id:NodeId;
  device:uint32;
- kind:uint8;
+ prefix:uint8;
 }
+
+/* table PushRef { */
+/*  prefix:uint8; */
+/*  timestamp:int64; */
+/*  place:uint16; */
+/*  push_id:PushId; */
+/* } */
 
 table MessageTarget {
  // user_id:string;
@@ -124,7 +132,7 @@ table MessageEvent {
  message_id:string;
  root:string;
  tag:string;
- timestamp:uint64;
+ timestamp:int64;
  forwarded_from:string;
  forwarded_from_tag:string;
  nodes:[string];
@@ -146,7 +154,7 @@ root_type MessageEvent;
 /*  timestamp:int64; */
 /*  u32:uint32; */
 /*  place:uint16; */
-/*  kind:uint8; */
+/*  prefix:uint8; */
 /* } */
 
 /* table Area { */
@@ -180,13 +188,13 @@ root_type MessageEvent;
 /*  tss:uint32; */
 /*  u32:uint32; */
 /*  place:uint16; */
-/*  kind:uint8; */
+/*  prefix:uint8; */
 /* } */
 
 /* table DualRoot { */
 /*  primary:Root; */
 /*  secondary:Root; */
-/*  kind: uint8; */
+/*  prefix: uint8; */
 /* } */
 
 /* struct Temp { */
